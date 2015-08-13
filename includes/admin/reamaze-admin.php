@@ -71,7 +71,7 @@ class Reamaze_Admin {
     wp_enqueue_script( 'jquery-markitup', $reamaze->plugin_url() . '/assets/js/admin/jquery.markitup.js' );
     wp_enqueue_script( 'reamaze-markitup-driver', $reamaze->plugin_url() . '/assets/js/admin/markitup-driver.js' );
     wp_enqueue_script( 'reamaze-admin', $reamaze->plugin_url() . '/assets/js/admin/reamaze-admin.js' );
-    wp_enqueue_script( 'reamaze-js', 'https://d3itxuyrq7vzpz.cloudfront.net/assets/reamaze.js' );
+    wp_enqueue_script( 'reamaze-js', 'https://d3itxuyrq7vzpz.cloudfront.net/assets/reamaze.js', array(), null );
     wp_enqueue_style( 'colorbox-css', $reamaze->plugin_url() . '/assets/css/colorbox.css' );
     wp_enqueue_style( 'reamaze-admin', $reamaze->plugin_url() . '/assets/css/admin/reamaze-admin.css' );
     wp_enqueue_style( 'reamaze-markitup', $reamaze->plugin_url() . '/assets/css/admin/markitup.css' );
