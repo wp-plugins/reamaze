@@ -5,7 +5,7 @@
  * @author      Reamaze
  * @category    Admin
  * @package     Reamaze/Admin
- * @version     1.0
+ * @version     1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,10 +30,21 @@ class Reamaze_Admin_Dashboard_Widgets {
   public function overview_widget() {
     $reamazeAccountId = get_option('reamaze_account_id');
     $reamazeApiKey = wp_get_current_user()->reamaze_api_key;
+    $reamazeSettingsURL = admin_url('/admin.php?page=reamaze-settings');
 
     if ( ! empty( $reamazeAccountId ) && ! empty( $reamazeApiKey ) ) {
-      $openConversationsResult = Reamaze\API\Conversation::all( array( "filter" => 'open' ) );
-      $unassignedConversationsResult = Reamaze\API\Conversation::all( array( "filter" => 'unassigned' ) );
+      try {
+        $openConversationsResult = Reamaze\API\Conversation::all( array( "filter" => 'open' ) );
+        $unassignedConversationsResult = Reamaze\API\Conversation::all( array( "filter" => 'unassigned' ) );
+      } catch ( Reamaze\API\Exceptions\Api $e ) {
+        if ( $e->getCode() == 403 ) {
+          include( "views/errors/login-credentials-invalid.php" );
+        } else {
+          include( "views/errors/error.php" );
+        }
+        return;
+      }
+
       $accountBaseUrl = "https://" . $reamazeAccountId . ".reamaze.com";
       ?>
       <?php if ( $openConversationsResult['total_count'] == 0 && $unassignedConversationsResult['total_count'] == 0 ) { ?>
@@ -49,23 +60,13 @@ class Reamaze_Admin_Dashboard_Widgets {
       </p>
       <?php
     } else {
-      $reamazeSettingsURL = admin_url('/admin.php?page=reamaze-settings');
+
       if ( ! $reamazeAccountId ) {
-        $link = sprintf( wp_kses( __( 'Please provide your Reamaze Account ID and SSO Key <a href="%s">here</a>.', 'reamaze' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $reamazeSettingsURL . '&tab=account' ) );
-        ?>
-        <div style="text-align: center; padding: 20px;">
-          <h2><?php echo __( "Reamaze Setup Incomplete", 'reamaze'); ?><h2>
-          <p><?php echo $link ?></p>
-        </div>
-        <?php
+        include( "views/errors/setup-incomplete.php" );
+        return;
       } elseif ( ! $reamazeApiKey ) {
-        $link = sprintf( wp_kses( __( 'Please provide your Reamaze API Key <a href="%s">here</a>.', 'reamaze' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $reamazeSettingsURL . '&tab=personal' ) );
-        ?>
-        <div style="text-align: center; padding: 20px;">
-          <h2><?php echo __( "API Key Not Found", 'reamaze'); ?><h2>
-          <p><?php echo $link ?></p>
-        </div>
-        <?php
+        include( "views/errors/missing-api-key.php" );
+        return;
       }
     }
   }

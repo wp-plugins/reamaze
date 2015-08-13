@@ -3,14 +3,14 @@
  * Plugin Name: Reamaze Helpdesk for WordPress
  * Plugin URI:  https://www.reamaze.com?referrer=wordpress
  * Description: Reamaze Helpdesk, Customer Support and Live Chat for WordPress
- * Version:     1.0
+ * Version:     1.0.1
  * Author:      The Reamaze Team
  * Author URI:  https://www.reamaze.com?referrer=wordpress
  */
 include_once( 'includes/lib/reamaze-api-client-php/autoload.php' );
 
 class Reamaze {
-  public static $version = '1.0.0';
+  public static $version = '1.0.1';
 
   public function __construct() {
     $this->includes();
@@ -56,6 +56,7 @@ class Reamaze {
     <script type="text/javascript">
       var _support = _support || { 'ui': {}, 'user': {} };
       _support['account'] = '<?php echo get_option('reamaze_account_id'); ?>';
+      _support['ui']['widget'] = true;
 
       <?php if ( is_user_logged_in() ) {
         $this->_renderWidgetUserData();
@@ -73,7 +74,8 @@ class Reamaze {
 
   public function plugin_action_links( $links ) {
     return array_merge( $links, array(
-      'settings' => '<a href="' . admin_url( 'admin.php?page=reamaze-settings' ) . '" title="' . __( 'Settings', 'reamaze' ) . '">' . __( 'Settings', 'reamaze' ) . '</a>'
+      'settings' => '<a href="' . admin_url( 'admin.php?page=reamaze-settings' ) . '" title="' . __( 'Settings', 'reamaze' ) . '">' . __( 'Settings', 'reamaze' ) . '</a>',
+      'help' => '<a href="javascript:;" data-reamaze-lightbox="kb">' . __( 'Help', 'reamaze' ) . '</a>'
     ) );
   }
 

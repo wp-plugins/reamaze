@@ -17,6 +17,8 @@ if ( ! strpos( $path, '?' ) ) {
 if ( ! $reamazeAccountId || ! $reamazeSSOKey ) {
   include_once('admin-welcome.php');
 } else {
+
+$reamazeEmail = get_reamaze_email();
 ?>
 <div class="wrap">
   <div id="reamaze-launch-external"><a target="_blank" href="https://<?php echo $reamazeAccountId; ?>.reamaze.com/admin"><?php echo __("Launch Reamaze in New Window", 'reamaze'); ?></a></div>
@@ -29,7 +31,7 @@ if ( ! $reamazeAccountId || ! $reamazeSSOKey ) {
     var _baseUrl = "https://<?php echo $reamazeAccountId; ?>.reamaze.com";
     var _user = {
       "id": "<?php echo 'wp-admin-' . wp_get_current_user()->ID; ?>",
-      "email": "<?php echo wp_get_current_user()->user_email; ?>",
+      "email": "<?php echo $reamazeEmail; ?>",
       "authkey": "<?php echo Reamaze_Admin::get_auth_key('wp-admin-' . wp_get_current_user()->ID, wp_get_current_user()->user_email); ?>",
       "parent_url": window.location.href
     };

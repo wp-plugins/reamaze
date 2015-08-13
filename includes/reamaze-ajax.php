@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author      Reamaze
  * @category    Class
  * @package     Reamaze/Classes
- * @version     1.0
+ * @version     1.0.1
  */
 
 include_once( 'lib/parsedown/parsedown.php' );
@@ -32,7 +32,6 @@ class Reamaze_Ajax {
 
     if ( 'GET' == $_SERVER['REQUEST_METHOD'] ) {
       $comment = get_comment( $_GET['comment_id'] );
-      $categories = Reamaze\API\Category::all(array("channel" => "email"));
 
       include_once( "admin/views/admin-ajax-convert-to-conversation.php" );
     } else if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
@@ -91,6 +90,7 @@ class Reamaze_Ajax {
         }
 
         $result['admin_url'] = 'https://' . get_option( 'reamaze_account_id' ) . '.reamaze.com/admin/conversations/' . $result['slug'];
+        $result['admin_path'] = '/admin/conversations/' . $result['slug'];
 
         print json_encode( $result );
       } else {
