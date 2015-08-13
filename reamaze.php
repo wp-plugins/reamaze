@@ -56,6 +56,7 @@ class Reamaze {
     <script type="text/javascript">
       var _support = _support || { 'ui': {}, 'user': {} };
       _support['account'] = '<?php echo get_option('reamaze_account_id'); ?>';
+      _support['ui']['widget'] = true;
 
       <?php if ( is_user_logged_in() ) {
         $this->_renderWidgetUserData();
