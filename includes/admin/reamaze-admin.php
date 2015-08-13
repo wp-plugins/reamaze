@@ -6,7 +6,7 @@
  * @author      Reamaze
  * @category    Admin
  * @package     Reamaze/Admin
- * @version     1.0
+ * @version     1.0.1
  */
 
 if (!defined('ABSPATH')) {
@@ -38,7 +38,7 @@ class Reamaze_Admin {
 
     if ( ! empty( $reamazeAccountId ) && ! empty( $reamazeApiKey ) ) {
       Reamaze\API\Config::setBrand( get_option('reamaze_account_id') );
-      Reamaze\API\Config::setCredentials( wp_get_current_user()->user_email, $reamazeApiKey );
+      Reamaze\API\Config::setCredentials( get_reamaze_email(), $reamazeApiKey );
     }
 
     // Classes we only need during non-ajax requests
@@ -71,6 +71,7 @@ class Reamaze_Admin {
     wp_enqueue_script( 'jquery-markitup', $reamaze->plugin_url() . '/assets/js/admin/jquery.markitup.js' );
     wp_enqueue_script( 'reamaze-markitup-driver', $reamaze->plugin_url() . '/assets/js/admin/markitup-driver.js' );
     wp_enqueue_script( 'reamaze-admin', $reamaze->plugin_url() . '/assets/js/admin/reamaze-admin.js' );
+    wp_enqueue_script( 'reamaze-js', 'https://d3itxuyrq7vzpz.cloudfront.net/assets/reamaze.js' );
     wp_enqueue_style( 'colorbox-css', $reamaze->plugin_url() . '/assets/css/colorbox.css' );
     wp_enqueue_style( 'reamaze-admin', $reamaze->plugin_url() . '/assets/css/admin/reamaze-admin.css' );
     wp_enqueue_style( 'reamaze-markitup', $reamaze->plugin_url() . '/assets/css/admin/markitup.css' );
@@ -140,7 +141,7 @@ class Reamaze_Admin {
     $page_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM " . $wpdb->posts . " WHERE post_type = 'page' AND post_name = '%s' LIMIT 1;", $slug ) );
 
     if ( $page_id ) {
-      update_option( $page_option, $page_id );
+      update_option( $id, $page_id );
 
       return $page_id;
     }
@@ -157,7 +158,7 @@ class Reamaze_Admin {
 
     $page_id = wp_insert_post( $page_data );
 
-    update_option( $page_option, $page_id );
+    update_option( $id, $page_id );
 
     return $page_id;
   }

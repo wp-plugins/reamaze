@@ -5,7 +5,7 @@
  * @author      Reamaze
  * @category    Admin
  * @package     Reamaze/Admin
- * @version     1.0
+ * @version     1.0.1
  */
 
 if (!defined('ABSPATH')) {
@@ -27,6 +27,7 @@ class Reamaze_Admin_Menus {
 		add_action('admin_menu', array($this, 'admin_menu'));
 		add_action('admin_menu', array($this, 'app_menus'));
 		add_action('admin_menu', array($this, 'settings_menu'));
+		add_action('admin_menu', array($this, 'help_menu'));
 	}
 
 	/**
@@ -34,7 +35,7 @@ class Reamaze_Admin_Menus {
 	 */
 	public function admin_menu() {
 	    global $reamaze;
-        add_menu_page(__('Reamaze', 'reamaze'), __('Reamaze', 'reamaze'), 'manage_options', 'reamaze', null, $reamaze->plugin_url() . '/assets/images/icons/logo-mint-16.png' );
+      add_menu_page(__('Reamaze', 'reamaze'), __('Reamaze', 'reamaze'), 'manage_options', 'reamaze', null, $reamaze->plugin_url() . '/assets/images/icons/logo-mint-16.png' );
 	}
 
 	/**
@@ -51,6 +52,13 @@ class Reamaze_Admin_Menus {
 		$settings_page = add_submenu_page('reamaze', __('Reamaze Settings', 'reamaze'), __('Settings', 'reamaze'), 'manage_options', 'reamaze-settings', array($this, 'settings_page'));
 	}
 
+	/**
+   * Help Menu
+   */
+  public function help_menu() {
+    $settings_page = add_submenu_page('reamaze', __('Reamaze Help', 'reamaze'), __('Need Help?', 'reamaze'), 'manage_options', 'reamaze-help', array($this, 'help_page'));
+  }
+
   /**
    * Settings page content
    */
@@ -65,6 +73,12 @@ class Reamaze_Admin_Menus {
   public function dashboard_page() {
     include_once('reamaze-admin-dashboard.php');
     Reamaze_Admin_Dashboard::output();
+  }
+
+  public function help_page() {
+    ?>
+    <div data-reamaze-embed="kb"></div>
+    <?php
   }
 }
 

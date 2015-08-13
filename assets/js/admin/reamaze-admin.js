@@ -1,3 +1,16 @@
+var _support = _support || { 'ui': {}, 'user': {} };
+_support['account'] = 'reamaze';
+_support['custom_fields'] = {
+  current_page: {
+    type: 'hidden',
+    value: window.location.href
+  },
+  app: {
+    type: 'hidden',
+    value: 'wordpress'
+  }
+};
+
 (function($) {
   $(function() {
     $('body').on('click', 'a[data-reamaze-path]', function(e) {
@@ -56,6 +69,7 @@
               data: params,
               dataType: 'json',
               success: function(o) {
+                $('#create-reamaze-conversation-content-wrapper .conversation-admin-link').attr('data-reamaze-path', o['admin_path']);
                 $('#create-reamaze-conversation-content-wrapper .conversation-admin-link').attr('href', o['admin_url']);
                 $('#create-reamaze-conversation-content-wrapper .create-reamaze-conversation-content').hide();
                 $('#create-reamaze-conversation-content-wrapper .success-message').show();

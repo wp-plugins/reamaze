@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author      Reamaze
  * @category    Class
  * @package     Reamaze/Classes
- * @version     1.0
+ * @version     1.0.1
  */
 
 class Reamaze_Shortcodes {

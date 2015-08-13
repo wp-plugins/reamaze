@@ -4,7 +4,7 @@ Donate Link: https://www.reamaze.com/
 Tags: reamaze, support, customer support, helpdesk, help desk, ticket, live chat, conversations, chat, widget, comments, admin, livechat, plugin
 Requires at least: 4.0
 Tested up to: 4.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,12 @@ Send us any feature suggestions, bug requests, etc at support@reamaze.com . We a
 
 == Changelog ==
 
+= 1.0.1 =
+* Handle Reamaze API errors gracefully
+* Added 'Need Help?' submenu and help hooks throughout plugin
+* Added option under Personal Settings for Reamaze Login email
+* Added app banner and icons
+
 = 1.0.0 =
 * Initial Release
 * Add ability to convert comments into conversations
@@ -99,6 +105,9 @@ Send us any feature suggestions, bug requests, etc at support@reamaze.com . We a
 * Added a dashboard Overview Widget
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+This version adds some minor bugfixes and handles errors more gracefully. Also allows setting your Reamaze Login email.
 
 = 1.0.0 =
 Initial Release

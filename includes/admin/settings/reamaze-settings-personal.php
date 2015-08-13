@@ -5,7 +5,7 @@
  * @author      Reamaze
  * @category    Admin
  * @package     Reamaze/Admin
- * @version     1.0
+ * @version     1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,6 +35,15 @@ class Reamaze_Settings_Personal extends Reamaze_Settings_Page {
   public function get_settings() {
     $settings = array(
       array( 'title' => __( 'Personal Settings', 'reamaze' ), 'type' => 'title', 'id' => 'personal-settings-header' ),
+
+      array(
+        'title'    => __( 'Reamaze Login', 'reamaze' ),
+        'desc'     => __( 'Your Reamaze Login Email, for example login@example.com', 'reamaze' ),
+        'id'       => 'reamaze_login_email',
+        'type'     => 'email',
+        'default'  => '',
+        'user_setting' => true
+      ),
 
       array(
         'title'    => __( 'Reamaze API Key', 'reamaze' ),

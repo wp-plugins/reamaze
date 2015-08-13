@@ -24,6 +24,7 @@ if (!defined('ABSPATH')) {
 
 		<p class="submit">
 			<input name="save" class="button-primary" type="submit" value="<?php _e( 'Save Changes', 'reamaze' ); ?>" />
+			<a href="javascript:;" style="margin-left: 2em;" data-reamaze-lightbox="kb">Need help?</a>
 			<input type="hidden" name="subtab" id="last_tab" />
 			<?php wp_nonce_field( 'reamaze-settings' ); ?>
 		</p>

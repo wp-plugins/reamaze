@@ -9,22 +9,22 @@ $apiKey = wp_get_current_user()->reamaze_api_key;
 $reamazeSettingsURL = admin_url('/admin.php?page=reamaze-settings');
 
 if ( ! $reamazeAccountId ) {
-  $link = sprintf( wp_kses( __( 'Please provide your Reamaze Account ID and SSO Key <a href="%s">here</a>.', 'reamaze' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $reamazeSettingsURL . '&tab=account' ) );
-  ?>
-  <div style="text-align: center; padding: 20px;">
-    <h2><?php echo __( "Reamaze Setup Incomplete", 'reamaze'); ?><h2>
-    <p><?php echo $link ?></p>
-  </div>
-  <?php
+  include( "errors/setup-incomplete.php" );
+  return;
 } elseif ( ! $apiKey ) {
-  $link = sprintf( wp_kses( __( 'Please provide your Reamaze API Key <a href="%s">here</a>.', 'reamaze' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $reamazeSettingsURL . '&tab=personal' ) );
-  ?>
-  <div style="text-align: center; padding: 20px;">
-    <h2><?php echo __( "API Key Not Found", 'reamaze'); ?><h2>
-    <p><?php echo $link ?></p>
-  </div>
-  <?php
+  include( "errors/missing-api-key.php" );
+  return;
 } else {
+  try {
+    $categories = Reamaze\API\Category::all( array( "channel" => "email" ) );
+  } catch ( Reamaze\API\Exceptions\Api $e ) {
+    if ( $e->getCode() == 403 ) {
+      include( "errors/login-credentials-invalid.php" );
+    } else {
+      include( "errors/error.php" );
+    }
+    return;
+  }
 ?>
 <div id="create-reamaze-conversation-content-wrapper">
   <?php if ( $slug = get_comment_meta( $comment->comment_ID, 'reamaze-conversation', true ) )  { ?>
